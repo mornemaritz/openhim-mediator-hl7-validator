@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{707BC1AC-2E61-428E-8932-67AE6076AAA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHim.Mediator.Hl7Validator.Tests", "tests\OpenHim.Mediator.Hl7Validator.Tests\OpenHim.Mediator.Hl7Validator.Tests.csproj", "{BB010730-EFA7-4952-A3AF-6018E1E1C0F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHim.Mediator.Hl7Validator", "src\OpenHim.Mediator.Hl7Validator\OpenHim.Mediator.Hl7Validator.csproj", "{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5} = {707BC1AC-2E61-428E-8932-67AE6076AAA7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {066B260B-CE28-49A2-AA48-0804C861E4F6}
+	EndGlobalSection
+EndGlobal

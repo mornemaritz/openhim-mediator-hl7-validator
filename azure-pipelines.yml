@@ -5,6 +5,7 @@
 
 trigger: 
 - main
+- OIHP-1421-openhim-mediator-hl7-validator
 
 pr:
 - main

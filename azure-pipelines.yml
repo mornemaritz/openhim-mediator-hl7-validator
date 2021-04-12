@@ -18,7 +18,7 @@ variables:
 
 stages:
 
-- stage: Build
+- stage: Prepare
   jobs:
   - job: 
     steps:
@@ -28,7 +28,11 @@ stages:
         version: 5.0.x
         performMultiLevelLookup: true
         includePreviewVersions: true
-    
+
+- stage: Build
+  jobs:
+  - job: 
+    steps:
     - task: DotNetCoreCLI@2
       displayName: 'dotnet build $(buildConfiguration)'
       inputs:
@@ -36,4 +40,14 @@ stages:
         projects: '**/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
     
-
+- stage: Test
+  jobs:
+  - job: 
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet test $(buildConfiguration)'
+      inputs:
+        command: 'test'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+    

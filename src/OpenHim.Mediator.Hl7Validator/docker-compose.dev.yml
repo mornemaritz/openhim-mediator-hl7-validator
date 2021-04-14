@@ -1,0 +1,19 @@
+﻿version: '3'
+
+networks:
+  openhim_openhim:
+    driver: bridge
+    name: openhim_openhim
+
+services:
+  hl7-validator:
+    image: mornemaritz/hl7-validator:0.0.9
+    container_name: hl7-validator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+    volumes:
+      - $APPDATA/Microsoft/UserSecrets/453266d0-1ead-4bea-a0db-d700c55323ab:/root/.microsoft/usersecrets/453266d0-1ead-4bea-a0db-d700c55323ab
+    networks:
+      - openhim_openhim

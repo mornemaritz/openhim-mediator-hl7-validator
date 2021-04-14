@@ -1,65 +1,110 @@
-﻿namespace OpenHim.Mediator.Hl7Validator.Configuration
+﻿using System.Text.Json.Serialization;
+
+namespace OpenHim.Mediator.Hl7Validator.Configuration
 {
     public class MediatorConfig
     {
-        public OpenHimAuth openHimAuth { get; set; }
-        public MediatorCore mediatorCore { get; set; }
-        public MediatorSetup mediatorSetup { get; set; }
+        [JsonPropertyName("openHimAuth")]
+        public OpenHimAuth OpenHimAuth { get; set; }
+
+        [JsonPropertyName("mediatorCore")]
+        public MediatorCore MediatorCore { get; set; }
+
+        [JsonPropertyName("mediatorSetup")]
+        public MediatorSetup MediatorSetup { get; set; }
     }
 
     public class OpenHimAuth
     {
-        public string username { get; set; }
-        public string password { get; set; }
-        public bool trustSelfSigned { get; set; }
+        [JsonPropertyName("username")]
+        public string Username { get; set; }
+
+        [JsonPropertyName("password")]
+        public string Password { get; set; }
+
+        [JsonPropertyName("trustSelfSigned")]
+        public bool TrustSelfSigned { get; set; }
     }
 
     public class MediatorCore
     {
-        public string openHimCoreHost { get; set; }
-        public string openHimCoreAuthPath { get; set; }
-        public string openHimRegisterMediatorPath { get; set; }
-        public string openHimheartbeatpath { get; set; }
-        public int heartbeatInterval { get; set; }
-        public bool isHeartbeatDisabled { get; set; }
+
+        [JsonPropertyName("openHimCoreHost")]
+        public string OpenHimCoreHost { get; set; }
+
+        [JsonPropertyName("openHimCoreAuthPath")]
+        public string OpenHimCoreAuthPath { get; set; }
+
+        [JsonPropertyName("openHimRegisterMediatorPath")]
+        public string OpenHimRegisterMediatorPath { get; set; }
+
+        [JsonPropertyName("openHimHeartbeatpath")]
+        public string OpenHimHeartbeatPath { get; set; }
+
+        [JsonPropertyName("heartbeatInterval")]
+        public int HeartbeatInterval { get; set; }
+
+        [JsonPropertyName("isHeartbeatDisabled")]
+        public bool IsHeartbeatDisabled { get; set; }
     }
 
     public class MediatorSetup
     {
-        public string urn { get; set; }
-        public string version { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public DefaultChannelConfig[] defaultChannelConfig { get; set; }
-        public EndPoint[] endpoints { get; set; }
+        [JsonPropertyName("urn")]
+        public string Urn { get; set; }
+
+        [JsonPropertyName("version")]
+        public string Version { get; set; }
+
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("defaultChannelConfig")]
+        public ChannelConfig[] DefaultChannelConfig { get; set; }
+
+        [JsonPropertyName("endpoints")]
+        public Location[] Endpoints { get; set; }
     }
 
-    public class DefaultChannelConfig
+    public class ChannelConfig
     {
-        public string name { get; set; }
-        public string urlPattern { get; set; }
-        public string type { get; set; }
-        public Route[] routes { get; set; }
-        public string[] allow { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("urlPattern")]
+        public string UrlPattern { get; set; }
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("routes")]
+        public Location[] Routes { get; set; }
+
+        [JsonPropertyName("allow")]
+        public string[] Allow { get; set; }
     }
 
-    public class Route
+    public class Location
     {
-        public string name { get; set; }
-        public string host { get; set; }
-        public string port { get; set; }
-        public bool primary { get; set; }
-        public string type { get; set; }
-        public string path { get; set; }
-    }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-    public class EndPoint
-    {
-        public string name { get; set; }
-        public string host { get; set; }
-        public string path { get; set; }
-        public string port { get; set; }
-        public bool primary { get; set; }
-        public string type { get; set; }
+        [JsonPropertyName("host")]
+        public string Host { get; set; }
+
+        [JsonPropertyName("port")]
+        public string Port { get; set; }
+
+        [JsonPropertyName("primary")]
+        public bool Primary { get; set; }
+
+        [JsonPropertyName("type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("path")]
+        public string Path { get; set; }
     }
 }

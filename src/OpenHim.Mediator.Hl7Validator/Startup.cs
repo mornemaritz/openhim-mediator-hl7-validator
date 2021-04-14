@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Extensions;
 
 namespace OpenHim.Mediator.Hl7Validator
@@ -30,6 +31,9 @@ namespace OpenHim.Mediator.Hl7Validator
             // the token being expired (according to the openHIM logs), registration and heartbeats are currently disabled (in the deployed version).
             // Struggling to figure out what the issue is because the same authetication code works with a local containerised version of openHIM.
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
+
+            services.AddOptions();
+            services.Configure<Hl7Config>(Configuration.GetSection("hl7Config"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

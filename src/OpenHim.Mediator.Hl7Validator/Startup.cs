@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Extensions;
+using Serilog;
 
 namespace OpenHim.Mediator.Hl7Validator
 {
@@ -27,9 +28,6 @@ namespace OpenHim.Mediator.Hl7Validator
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenHim.Mediator.Hl7Validator", Version = "v1" });
             });
 
-            // Due to current issues with xe-openhim.jembi.org:8082 returning a 401 Response due to
-            // the token being expired (according to the openHIM logs), registration and heartbeats are currently disabled (in the deployed version).
-            // Struggling to figure out what the issue is because the same authetication code works with a local containerised version of openHIM.
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
 
             services.AddOptions();
@@ -39,7 +37,7 @@ namespace OpenHim.Mediator.Hl7Validator
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment() || env.IsEnvironment("DockerDebug"))
+            if (env.IsDevelopment() || env.IsEnvironment("DockerDev"))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -50,6 +48,8 @@ namespace OpenHim.Mediator.Hl7Validator
             // It may not be needed due to the mediator ultimately not being publically exposed: Traffic will be coming
             // via the OpenHIM with ssl-offloading
             //app.UseHttpsRedirection();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

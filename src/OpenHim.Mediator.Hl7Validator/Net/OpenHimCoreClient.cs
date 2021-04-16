@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using OpenHim.Mediator.Hl7Validator.Configuration;
 using System;
 using System.Collections.Generic;
@@ -14,45 +15,62 @@ namespace OpenHim.Mediator.Hl7Validator.Net
 {
     public class OpenHimCoreClient : IOpenHimCoreClient
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _openHimCoreHttpClient;
         private readonly MediatorConfig _mediatorConfig;
+        private readonly ILogger<OpenHimCoreClient> _logger;
 
-        public OpenHimCoreClient(HttpClient httpClient, IOptions<MediatorConfig> mediatorConfig)
+        public OpenHimCoreClient(HttpClient httpClient, IOptions<MediatorConfig> mediatorConfig, ILogger<OpenHimCoreClient> logger)
         {
             _mediatorConfig = mediatorConfig.Value ?? throw new ArgumentNullException(nameof(mediatorConfig));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            httpClient.BaseAddress = new Uri(_mediatorConfig.MediatorCore.OpenHimCoreHost);
+            var openHimCoreHost = _mediatorConfig.MediatorCore.OpenHimCoreHost ?? throw new ArgumentException($"{nameof(mediatorConfig)} has no value for MediatorCore.OpenHimCoreHost");
 
-            _httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(openHimCoreHost);
+
+            _openHimCoreHttpClient = httpClient;
         }
 
         public async Task RegisterAsync(CancellationToken cancellationToken)
         {
             var mediatorConfigStringContent = await AuthenticatedContentRequest(JsonSerializer.Serialize(_mediatorConfig.MediatorSetup), cancellationToken);
 
-            var registrationResponse = await _httpClient.PostAsync(_mediatorConfig.MediatorCore.OpenHimRegisterMediatorPath, mediatorConfigStringContent, cancellationToken);
+            var registrationResponse = await _openHimCoreHttpClient.PostAsync(_mediatorConfig.MediatorCore.OpenHimRegisterMediatorPath, mediatorConfigStringContent, cancellationToken);
 
-            registrationResponse.EnsureSuccessStatusCode();
+            await ValidateResponse(registrationResponse, mediatorConfigStringContent.Headers.GetValues("auth-ts").FirstOrDefault());
         }
 
         public async void PingOpenHim(object state)
         {
             var uptimeStringContent = await AuthenticatedContentRequest(JsonSerializer.Serialize(new { uptime = DateTime.UtcNow.Ticks }), CancellationToken.None);
 
-            var heartbeatResponse = await _httpClient.PostAsync($"{_mediatorConfig.MediatorCore.OpenHimRegisterMediatorPath}/{_mediatorConfig.MediatorSetup.Urn}/{_mediatorConfig.MediatorCore.OpenHimHeartbeatPath}", uptimeStringContent, CancellationToken.None);
+            var heartbeatResponse = await _openHimCoreHttpClient.PostAsync($"{_mediatorConfig.MediatorCore.OpenHimRegisterMediatorPath}/{_mediatorConfig.MediatorSetup.Urn}/{_mediatorConfig.MediatorCore.OpenHimHeartbeatPath}", uptimeStringContent, CancellationToken.None);
 
-            heartbeatResponse.EnsureSuccessStatusCode();
+            await ValidateResponse(heartbeatResponse, uptimeStringContent.Headers.GetValues("auth-ts").FirstOrDefault());
         }
 
         private async Task<string> AuthenticateAsync(CancellationToken cancellationToken)
         {
-            var authenticationResponse = await _httpClient.GetAsync($"{_mediatorConfig.MediatorCore.OpenHimCoreAuthPath}/{_mediatorConfig.OpenHimAuth.Username}", cancellationToken);
+            var authenticationResponse = await _openHimCoreHttpClient.GetAsync($"{_mediatorConfig.MediatorCore.OpenHimCoreAuthPath}/{_mediatorConfig.OpenHimAuth.Username}", cancellationToken);
 
-            authenticationResponse.EnsureSuccessStatusCode();
+            await ValidateResponse(authenticationResponse);
 
             var authResult = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(await authenticationResponse.Content.ReadAsStreamAsync(cancellationToken), default, cancellationToken);
 
             return authResult["salt"];
+        }
+
+        private async Task ValidateResponse(HttpResponseMessage httpResponse, string authTimestamp = default)
+        {
+            if (!_mediatorConfig.OpenHimAuth.IgnoreOutgoingOpenHimAuthFailures)
+                httpResponse.EnsureSuccessStatusCode();
+            else if (!httpResponse.IsSuccessStatusCode)
+            {
+                var passwordLength = _mediatorConfig.OpenHimAuth.Password?.Length;
+                var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                _logger.LogWarning($"Auth Failure: {responseContent}. auth-ts: {authTimestamp}. passwordLength: {passwordLength}. 'IgnoreOutgoingOpenHimAuthFailures' set to true. Ignoring");
+            }
         }
 
         private async Task<HttpContent> AuthenticatedContentRequest(string content, CancellationToken cancellationToken)

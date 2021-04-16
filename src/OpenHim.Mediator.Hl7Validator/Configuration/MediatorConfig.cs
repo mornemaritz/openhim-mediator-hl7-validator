@@ -24,6 +24,9 @@ namespace OpenHim.Mediator.Hl7Validator.Configuration
 
         [JsonPropertyName("trustSelfSigned")]
         public bool TrustSelfSigned { get; set; }
+
+        [JsonPropertyName("ignoreOutgoingOpenHimAuthFailures")]
+        public bool IgnoreOutgoingOpenHimAuthFailures { get; set; }
     }
 
     public class MediatorCore

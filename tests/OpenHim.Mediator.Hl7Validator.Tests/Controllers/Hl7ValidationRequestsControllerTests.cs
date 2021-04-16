@@ -1,7 +1,9 @@
 ﻿using AutoFixture;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 using NUnit.Framework;
 using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Controllers;
@@ -16,10 +18,12 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
         private Hl7ValidationRequestsController controllerUnderTest;
         private Fixture fixture;
         private Hl7Config hl7Config;
+        private Mock<ILogger<Hl7ValidationRequestsController>> logger;
 
         [SetUp]
         public void SetUp()
         {
+            logger = new Mock<ILogger<Hl7ValidationRequestsController>>();
             fixture = new Fixture();
             hl7Config = fixture.Create<Hl7Config>();
 
@@ -35,7 +39,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
                 HttpContext = httpContext,
             };
 
-            controllerUnderTest = new Hl7ValidationRequestsController(Options.Create(hl7Config)) { ControllerContext = controllerContext };
+            controllerUnderTest = new Hl7ValidationRequestsController(Options.Create(hl7Config), logger.Object) { ControllerContext = controllerContext };
         }
 
         [Test]

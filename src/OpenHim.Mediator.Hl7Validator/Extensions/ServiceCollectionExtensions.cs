@@ -30,8 +30,6 @@ namespace OpenHim.Mediator.Hl7Validator.Extensions
                     {
                         ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
                         {
-                            //var certificateAccepted = errors == SslPolicyErrors.None || errors  == SslPolicyErrors.RemoteCertificateChainErrors;
-
                             return true;// certificateAccepted;
                         }
                     };

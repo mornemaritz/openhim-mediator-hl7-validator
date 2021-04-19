@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Extensions;
+using OpenHim.Mediator.Hl7Validator.Services;
 using Serilog;
 
 namespace OpenHim.Mediator.Hl7Validator
@@ -29,6 +30,8 @@ namespace OpenHim.Mediator.Hl7Validator
             });
 
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
+
+            services.AddTransient<IHL7MessageProcessor, HL7MessageProcessor>();
 
             services.AddOptions();
             services.Configure<Hl7Config>(Configuration.GetSection("hl7Config"));

@@ -15,12 +15,14 @@ namespace OpenHim.Mediator.Hl7Validator.Controllers
     public class Hl7ValidationRequestsController : ControllerBase
     {
         private readonly IHL7MessageProcessor _hl7MessageProcessor;
+        private readonly IOpenHimResponseGenerator _openHimResponseGenerator;
         private readonly ILogger<Hl7ValidationRequestsController> _logger;
 
-        public Hl7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor, ILogger<Hl7ValidationRequestsController> logger)
+        public Hl7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor, IOpenHimResponseGenerator openHimResponseGenerator, ILogger<Hl7ValidationRequestsController> logger)
         {
             _hl7MessageProcessor = hl7MessageProcessor ?? throw new ArgumentNullException(nameof(hl7MessageProcessor));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _openHimResponseGenerator = openHimResponseGenerator ?? throw new ArgumentNullException(nameof(openHimResponseGenerator));
         }
 
         [HttpPost]
@@ -42,7 +44,12 @@ namespace OpenHim.Mediator.Hl7Validator.Controllers
             {
                 var encodedAck = await _hl7MessageProcessor.ParseAndReturnEncodedAck(hl7MessageString);
 
-                return Ok(encodedAck);
+                var openHimResponse = await _openHimResponseGenerator.PrimaryResponse(encodedAck);
+
+                // TODO: Wrap openHim specific response generation in middleware
+                Response.Headers.Add("Content-Type", "application/json+openhim");
+
+                return Ok(openHimResponse);
             }
             catch (HL7Exception hex)
             {

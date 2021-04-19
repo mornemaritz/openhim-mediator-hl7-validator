@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
-using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Controllers;
 using OpenHim.Mediator.Hl7Validator.Services;
 using System.IO;
@@ -19,6 +17,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
         private Hl7ValidationRequestsController controllerUnderTest;
         private Fixture fixture;
         private Mock<IHL7MessageProcessor> hl7MessageProcessor;
+        private Mock<IOpenHimResponseGenerator> openHimResponseGenerator;
         private Mock<ILogger<Hl7ValidationRequestsController>> logger;
 
         [SetUp]
@@ -26,6 +25,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
         {
             logger = new Mock<ILogger<Hl7ValidationRequestsController>>();
             hl7MessageProcessor = new Mock<IHL7MessageProcessor>();
+            openHimResponseGenerator = new Mock<IOpenHimResponseGenerator>();
             fixture = new Fixture();
 
             var hl7MessageData = @"MSH|^~\&|SENDING_APPLICATION|SENDING_FACILITY|RECEIVING_APPLICATION|RECEIVING_FACILITY|20110614075841||ACK|1407511|P|2.5.1||||||";
@@ -40,7 +40,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
                 HttpContext = httpContext,
             };
 
-            controllerUnderTest = new Hl7ValidationRequestsController(hl7MessageProcessor.Object, logger.Object) { ControllerContext = controllerContext };
+            controllerUnderTest = new Hl7ValidationRequestsController(hl7MessageProcessor.Object, openHimResponseGenerator.Object, logger.Object) { ControllerContext = controllerContext };
         }
 
         [Test]

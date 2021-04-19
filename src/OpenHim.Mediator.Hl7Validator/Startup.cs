@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +9,7 @@ using OpenHim.Mediator.Hl7Validator.Configuration;
 using OpenHim.Mediator.Hl7Validator.Extensions;
 using OpenHim.Mediator.Hl7Validator.Services;
 using Serilog;
+using System.Text.Json;
 
 namespace OpenHim.Mediator.Hl7Validator
 {
@@ -23,7 +25,14 @@ namespace OpenHim.Mediator.Hl7Validator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                var jsonOpenHimFormatter = new SystemTextJsonOutputFormatter(new JsonSerializerOptions());
+                jsonOpenHimFormatter.SupportedMediaTypes.Add("application/json+openhim");
+
+                options.OutputFormatters.Add(jsonOpenHimFormatter);
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenHim.Mediator.Hl7Validator", Version = "v1" });
@@ -32,6 +41,7 @@ namespace OpenHim.Mediator.Hl7Validator
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
 
             services.AddTransient<IHL7MessageProcessor, HL7MessageProcessor>();
+            services.AddTransient<IOpenHimResponseGenerator, OpenHimResponseGenerator>();
 
             services.AddOptions();
             services.Configure<Hl7Config>(Configuration.GetSection("hl7Config"));

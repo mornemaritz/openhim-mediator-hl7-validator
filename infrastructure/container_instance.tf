@@ -24,7 +24,7 @@ resource "azurerm_container_group" "hl7_validator_cg" {
 
   container {
     name   = "hl7-validator"
-    image  = "index.docker.io/mornemaritz/hl7-validator:0.0.19"
+    image  = "index.docker.io/mornemaritz/hl7-validator:0.0.20"
     cpu    = "0.5"
     memory = "1.5"
 	

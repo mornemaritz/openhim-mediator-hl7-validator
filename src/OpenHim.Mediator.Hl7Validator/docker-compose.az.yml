@@ -1,0 +1,66 @@
+version: '3'
+
+networks:
+  openhim:
+    driver: bridge
+    name: openhim-net
+    
+services:
+  hl7-validator:
+    build: .
+    image: mcr.microsoft.com/phdccontainerregistry/hl7-validator:0.0.20
+    container_name: hl7-validator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=ContainerGroup
+      - mediatorconfig__openHimAuth__corePassword=${openHimAuth__corePassword} # from .env file that should be created in the same directory containing "openHimAuth__password=xxxxx"
+      - mediatorconfig__openHimAuth__apiClientPassword=${openHimAuth__apiClientPassword}
+    ports:
+      - "7000:80"
+    networks:
+      - openhim
+      
+  openhim-mongo-db:
+    image: index.docker.io/mongo:4.0
+    container_name: openhim-mongo-db
+    networks:
+      - openhim
+
+  openhim-core:
+    container_name: openhim-core
+    image: jembi/openhim-core:latest
+    environment:
+      mongo_url: "mongodb://openhim-mongo-db/openhim-development"
+      mongo_atnaUrl: "mongodb://openhim-mongo-db/openhim-development"
+      NODE_ENV: "development"
+      logger_level: "debug"
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "5001:5001"
+    networks:
+      - openhim
+      
+  openhim-console:
+    container_name: openhim-console
+    image: jembi/openhim-console:latest
+    ports:
+      - "9000:80"
+    networks:
+      - openhim
+      
+  openhim-mediator-file-queue:
+    container_name: openhim-mediator-file-queue
+    image: jembi/openhim-mediator-file-queue:latest
+    ports:
+      - "4002:4002"
+    environment:
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      API_PASSWORD: ${openHimAuth__corePassword}
+      API_USERNAME: root@openhim.org
+      API_URL: "https://openhim-core:8080"
+      HEARTBEAT: "true"
+      LOG_LEVEL: info
+      SERVER_PORT: 4002
+      TRUST_SELF_SIGNED: "true"      
+    networks:
+      - openhim

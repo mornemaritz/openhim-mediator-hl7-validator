@@ -63,10 +63,12 @@ namespace OpenHim.Mediator.Hl7Validator.Services
                             Name = orchestration.Name,
                             Request = new Request
                             {
+                                Host = orchestration.Request.Host,
+                                Path = orchestration.Request.Path,
+                                Querystring = orchestration.Request.Querystring,
                                 Headers = orchestration.Request.Headers,
                                 Body = requestContent,
                                 Method = orchestration.Request.Method,
-                                Path = orchestration.Request.Path,
                                 Timestamp = DateTime.UtcNow.ToString("s")
                             },
                             Response = new Response

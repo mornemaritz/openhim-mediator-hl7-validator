@@ -22,12 +22,19 @@ namespace OpenHim.Mediator.Hl7Validator.Models
 
         [JsonPropertyName("error"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         public Error Error { get; set; }
+
+        public void AddOrchestration(Orchestration orchestration)
+        {
+            if (Orchestrations == null) Orchestrations = new List<Orchestration>();
+
+            Orchestrations.Add(orchestration);
+        }
     }
 
     public class Response
     {
         [JsonPropertyName("status")]
-        public byte Status { get; set; }
+        public short Status { get; set; }
 
         [JsonPropertyName("headers")]
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
@@ -62,6 +69,9 @@ namespace OpenHim.Mediator.Hl7Validator.Models
 
     public class Request
     {
+        [JsonPropertyName("host")]
+        public string Host { get; set; }
+
         [JsonPropertyName("path")]
         public string Path { get; set; }
 

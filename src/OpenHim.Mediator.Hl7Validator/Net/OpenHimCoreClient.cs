@@ -51,7 +51,7 @@ namespace OpenHim.Mediator.Hl7Validator.Net
 
         private async Task<string> AuthenticateAsync(CancellationToken cancellationToken)
         {
-            var authenticationResponse = await _openHimCoreHttpClient.GetAsync($"{_mediatorConfig.MediatorCore.OpenHimCoreAuthPath}/{_mediatorConfig.OpenHimAuth.Username}", cancellationToken);
+            var authenticationResponse = await _openHimCoreHttpClient.GetAsync($"{_mediatorConfig.MediatorCore.OpenHimCoreAuthPath}/{_mediatorConfig.OpenHimAuth.CoreUsername}", cancellationToken);
 
             await ValidateResponse(authenticationResponse);
 
@@ -66,7 +66,7 @@ namespace OpenHim.Mediator.Hl7Validator.Net
                 httpResponse.EnsureSuccessStatusCode();
             else if (!httpResponse.IsSuccessStatusCode)
             {
-                var passwordLength = _mediatorConfig.OpenHimAuth.Password?.Length;
+                var passwordLength = _mediatorConfig.OpenHimAuth.CorePassword?.Length;
                 var responseContent = await httpResponse.Content.ReadAsStringAsync();
 
                 _logger.LogWarning($"Auth Failure: {responseContent}. auth-ts: {authTimestamp}. passwordLength: {passwordLength}. 'IgnoreOutgoingOpenHimAuthFailures' set to true. Ignoring");
@@ -82,7 +82,7 @@ namespace OpenHim.Mediator.Hl7Validator.Net
 
             var sha512 = SHA512.Create();
 
-            var passwordBytes = sha512.ComputeHash(Encoding.Default.GetBytes($"{theirSalt}{_mediatorConfig.OpenHimAuth.Password}"));
+            var passwordBytes = sha512.ComputeHash(Encoding.Default.GetBytes($"{theirSalt}{_mediatorConfig.OpenHimAuth.CorePassword}"));
             var passwordHexHash = string.Join(string.Empty, passwordBytes.Select(b => $"{b:x2}"));
 
             var authTokenBytes = sha512.ComputeHash(Encoding.Default.GetBytes($"{passwordHexHash}{mySalt}{now}"));
@@ -93,7 +93,7 @@ namespace OpenHim.Mediator.Hl7Validator.Net
                 Encoding.UTF8,
                 "application/json");
 
-            stringContent.Headers.Add("auth-username", _mediatorConfig.OpenHimAuth.Username);
+            stringContent.Headers.Add("auth-username", _mediatorConfig.OpenHimAuth.CoreUsername);
             stringContent.Headers.Add("auth-ts", now);
             stringContent.Headers.Add("auth-salt", mySalt);
             stringContent.Headers.Add("auth-token", authTokenHex);

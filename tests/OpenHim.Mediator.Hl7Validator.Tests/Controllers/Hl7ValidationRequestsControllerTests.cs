@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using OpenHim.Mediator.Hl7Validator.Controllers;
+using OpenHim.Mediator.Hl7Validator.Models;
 using OpenHim.Mediator.Hl7Validator.Services;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,19 +17,26 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
     {
         private Hl7ValidationRequestsController controllerUnderTest;
         private Fixture fixture;
+
         private Mock<IHL7MessageProcessor> hl7MessageProcessor;
-        private Mock<IOpenHimResponseGenerator> openHimResponseGenerator;
+        private Mock<IOpenHimOrchestrator> orchestrator;
         private Mock<ILogger<Hl7ValidationRequestsController>> logger;
+
+        private const string hl7MessageData = @"MSH|^~\&|SENDING_APPLICATION|SENDING_FACILITY|RECEIVING_APPLICATION|RECEIVING_FACILITY|20110614075841||ACK|1407511|P|2.5.1||||||";
+        private OpenHimResponse openHimResponse;
 
         [SetUp]
         public void SetUp()
         {
-            logger = new Mock<ILogger<Hl7ValidationRequestsController>>();
             hl7MessageProcessor = new Mock<IHL7MessageProcessor>();
-            openHimResponseGenerator = new Mock<IOpenHimResponseGenerator>();
-            fixture = new Fixture();
+            orchestrator = new Mock<IOpenHimOrchestrator>();
+            logger = new Mock<ILogger<Hl7ValidationRequestsController>>();
 
-            var hl7MessageData = @"MSH|^~\&|SENDING_APPLICATION|SENDING_FACILITY|RECEIVING_APPLICATION|RECEIVING_FACILITY|20110614075841||ACK|1407511|P|2.5.1||||||";
+            fixture = new Fixture();
+            openHimResponse = fixture.Create<OpenHimResponse>();
+            orchestrator.Setup(o => o.Do(It.IsAny<string>(), It.IsAny<Response>(), It.IsAny<bool>()))
+                .ReturnsAsync(openHimResponse);
+
             var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(hl7MessageData));
 
             var httpContext = new DefaultHttpContext();
@@ -40,7 +48,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
                 HttpContext = httpContext,
             };
 
-            controllerUnderTest = new Hl7ValidationRequestsController(hl7MessageProcessor.Object, openHimResponseGenerator.Object, logger.Object) { ControllerContext = controllerContext };
+            controllerUnderTest = new Hl7ValidationRequestsController(hl7MessageProcessor.Object, orchestrator.Object, logger.Object) { ControllerContext = controllerContext };
         }
 
         [Test]
@@ -81,10 +89,47 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
         }
 
         [Test]
-        public async Task Post_ReturnsOkResult()
+        public async Task Post_ReturnsOkResultWithOpenHimResponse()
         {
-            // Act & Assert
-            Assert.That(await controllerUnderTest.Post(), Is.InstanceOf<OkObjectResult>());
+            // Act
+            var actualResult = await controllerUnderTest.Post();
+
+            // Assert
+            Assert.That(actualResult, Is.InstanceOf<OkObjectResult>());
+
+            Assert.That((actualResult as OkObjectResult).Value, Is.InstanceOf<OpenHimResponse>());
+        }
+
+        [Test]
+        public async Task Post_SetsResponseHeaderTo()
+        {
+            // Act
+            await controllerUnderTest.Post();
+
+            // Assert
+            var contentTypeHeaderValues = controllerUnderTest.Response.Headers.GetCommaSeparatedValues("Content-Type");
+
+            Assert.That(contentTypeHeaderValues, Does.Contain("application/json+openhim"));
+        }
+
+        [Test]
+        public async Task Post_Calls_HL7MessageProcessor_ParseAndReturnAck()
+        {
+            // Act
+            await controllerUnderTest.Post();
+
+            // Assert
+            hl7MessageProcessor.Verify(p => p.ParseAndReturnEncodedAck(hl7MessageData, default), Times.Once);
+        }
+
+        [Test]
+        public async Task Post_Calls_Orchsetrator_Do()
+        {
+            // Act
+            await controllerUnderTest.Post();
+
+            // Assert
+            orchestrator.Verify(p => p.Do(It.IsAny<string>(), It.IsAny<Response>(), default), Times.Once);
         }
     }
 }

@@ -7,6 +7,7 @@ using NHapi.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using OpenHim.Mediator.Hl7Validator.Services;
+using OpenHim.Mediator.Hl7Validator.Extensions;
 
 namespace OpenHim.Mediator.Hl7Validator.Controllers
 {
@@ -15,14 +16,16 @@ namespace OpenHim.Mediator.Hl7Validator.Controllers
     public class Hl7ValidationRequestsController : ControllerBase
     {
         private readonly IHL7MessageProcessor _hl7MessageProcessor;
-        private readonly IOpenHimResponseGenerator _openHimResponseGenerator;
+        private readonly IOpenHimOrchestrator _orchestrator;
         private readonly ILogger<Hl7ValidationRequestsController> _logger;
 
-        public Hl7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor, IOpenHimResponseGenerator openHimResponseGenerator, ILogger<Hl7ValidationRequestsController> logger)
+        public Hl7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor,
+            IOpenHimOrchestrator orchestrator,
+            ILogger<Hl7ValidationRequestsController> logger)
         {
             _hl7MessageProcessor = hl7MessageProcessor ?? throw new ArgumentNullException(nameof(hl7MessageProcessor));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _openHimResponseGenerator = openHimResponseGenerator ?? throw new ArgumentNullException(nameof(openHimResponseGenerator));
+            _orchestrator = orchestrator ?? throw new ArgumentNullException(nameof(orchestrator));
         }
 
         [HttpPost]
@@ -44,9 +47,8 @@ namespace OpenHim.Mediator.Hl7Validator.Controllers
             {
                 var encodedAck = await _hl7MessageProcessor.ParseAndReturnEncodedAck(hl7MessageString);
 
-                var openHimResponse = await _openHimResponseGenerator.PrimaryResponse(encodedAck);
+                var openHimResponse = await _orchestrator.Do(hl7MessageString, encodedAck.ToOpenHimConsumerResponse(), encodedAck.IsHL7ApplicationAcceptAck());
 
-                // TODO: Wrap openHim specific response generation in middleware
                 Response.Headers.Add("Content-Type", "application/json+openhim");
 
                 return Ok(openHimResponse);

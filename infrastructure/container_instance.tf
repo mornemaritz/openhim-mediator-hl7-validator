@@ -33,7 +33,8 @@ resource "azurerm_container_group" "hl7_validator_cg" {
 	}
 	
 	secure_environment_variables = {
-		"mediatorconfig__openHimAuth__password" = file("~/.openhim_pw")
+		"mediatorconfig__openHimAuth__corePassword" = file("~/.openhim_core_pw")
+		"mediatorconfig__openHimAuth__apiClientPassword" = file("~/.openhim_api_client_pw")
 	}
 	
     ports {

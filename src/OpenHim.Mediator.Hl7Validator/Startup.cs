@@ -28,6 +28,7 @@ namespace OpenHim.Mediator.Hl7Validator
             services.AddControllers(options =>
             {
                 var jsonOpenHimFormatter = new SystemTextJsonOutputFormatter(new JsonSerializerOptions());
+                // Need to add support for the media type expected by openHIM otherwise dotnet will return a 406.
                 jsonOpenHimFormatter.SupportedMediaTypes.Add("application/json+openhim");
 
                 options.OutputFormatters.Add(jsonOpenHimFormatter);
@@ -41,7 +42,7 @@ namespace OpenHim.Mediator.Hl7Validator
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
 
             services.AddTransient<IHL7MessageProcessor, HL7MessageProcessor>();
-            services.AddTransient<IOpenHimResponseGenerator, OpenHimResponseGenerator>();
+            services.AddTransient<IOpenHimOrchestrator, OpenHimOrchestrator>();
 
             services.AddOptions();
             services.Configure<Hl7Config>(Configuration.GetSection("hl7Config"));

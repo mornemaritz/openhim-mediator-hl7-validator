@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using OpenHim.Mediator.Hl7Validator.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace OpenHim.Mediator.Hl7Validator.Configuration
 {
@@ -12,15 +15,29 @@ namespace OpenHim.Mediator.Hl7Validator.Configuration
 
         [JsonPropertyName("mediatorSetup")]
         public MediatorSetup MediatorSetup { get; set; }
+
+        [JsonPropertyName("orchestrations"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public List<Orchestration> Orchestrations { get; set; } = new List<Orchestration>();
+
+        public bool HasOrchestrations()
+        {
+            return Orchestrations != null && Orchestrations.Any();
+        }
     }
 
     public class OpenHimAuth
     {
-        [JsonPropertyName("username")]
-        public string Username { get; set; }
+        [JsonPropertyName("coreUsername")]
+        public string CoreUsername { get; set; }
 
-        [JsonPropertyName("password")]
-        public string Password { get; set; }
+        [JsonPropertyName("corePassword")]
+        public string CorePassword { get; set; }
+
+        [JsonPropertyName("apiClientName")]
+        public string ApiClientName { get; set; }
+
+        [JsonPropertyName("apiClientPassword")]
+        public string ApiClientPassword { get; set; }
 
         [JsonPropertyName("trustSelfSigned")]
         public bool TrustSelfSigned { get; set; }

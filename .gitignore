@@ -12,6 +12,7 @@
 *.plan
 *.tfstate
 *.tfstate.backup
+*.tf.backup
 
 # User-specific files
 *.rsuser

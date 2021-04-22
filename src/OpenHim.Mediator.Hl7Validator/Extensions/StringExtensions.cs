@@ -7,13 +7,15 @@ namespace OpenHim.Mediator.Hl7Validator.Extensions
 {
     public static class StringExtensions
     {
+        public static char nHapiHL7NewLine = '\r';
+
         public static bool IsHL7MessageHeaderOnly(this string source)
         {
             if (string.IsNullOrEmpty(source))
                 return false;
 
             return source.StartsWith("MSH|")
-                && !source.Contains(Environment.NewLine); 
+                && !source.Contains(nHapiHL7NewLine); 
         }
 
         public static string GetHL7MessageHeader(this string source)
@@ -21,7 +23,7 @@ namespace OpenHim.Mediator.Hl7Validator.Extensions
             if (string.IsNullOrEmpty(source))
                 return default;
 
-            var firstLine = source.Split(Environment.NewLine).FirstOrDefault();
+            var firstLine = source.Split(nHapiHL7NewLine).FirstOrDefault();
 
             if (firstLine.IsHL7MessageHeaderOnly())
                 return firstLine;
@@ -34,7 +36,7 @@ namespace OpenHim.Mediator.Hl7Validator.Extensions
             if (string.IsNullOrEmpty(source))
                 return false;
 
-            return source.Split(Environment.NewLine).Any(l => l.StartsWith("MSA|AA|"));
+            return source.Split(nHapiHL7NewLine).Any(l => l.StartsWith("MSA|AA|"));
         }
 
         // This should be in a namespace that denotes the translation layer between HL7 related concepts and OpenHim related concepts (other extensions here are purely HL7).

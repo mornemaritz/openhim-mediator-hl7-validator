@@ -24,12 +24,12 @@ resource "azurerm_container_group" "hl7_validator_cg" {
 
   container {
     name   = "hl7-validator"
-    image  = "index.docker.io/mornemaritz/hl7-validator:0.0.17"
+    image  = "index.docker.io/mornemaritz/hl7-validator:0.0.19"
     cpu    = "0.5"
     memory = "1.5"
 	
 	environment_variables = {
-		"mediatorconfig__mediatorCore__heartbeatEnabled" = false
+		"mediatorconfig__mediatorCore__heartbeatEnabled" 	= false
 	}
 	
 	secure_environment_variables = {

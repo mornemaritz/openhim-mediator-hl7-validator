@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenHim.Mediator.Hl7Validator.Extensions;
 using System;
+using static OpenHim.Mediator.Hl7Validator.Extensions.StringExtensions;
 
 namespace OpenHim.Mediator.Hl7Validator.Tests.Extensions
 {
@@ -34,8 +35,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Extensions
         public void IsHL7MessageHeaderOnly_WhenMultiLineReturnsFalse()
         {
             // Arrange
-            var multiLine = @"MSH|^~\&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL
-EVN|A08|20200702234543|||||";
+            var multiLine = @$"MSH|^~\&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}EVN|A08|20200702234543|||||";
 
             // Assert
             Assert.That(multiLine.IsHL7MessageHeaderOnly(), Is.False);
@@ -54,8 +54,7 @@ EVN|A08|20200702234543|||||";
         [Test]
         public void GetHL7MessageHeader_WhenHeaderExists_ReturnsHeader()
         {
-            var multiLine = @"MSH|^~&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL
-EVN|A08|20200702234543|||||";
+            var multiLine = @$"MSH|^~&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}EVN|A08|20200702234543|||||";
 
             Assert.That(multiLine.GetHL7MessageHeader(), Is.EqualTo(hl7HeaderOnly));
         }
@@ -80,9 +79,62 @@ EVN|A08|20200702234543|||||";
             // Arrange
             var noHL7Header = $"FOO{Environment.NewLine}BAR";
 
-
             Assert.That(noHL7Header.GetHL7MessageHeader(), Is.Null);
         }
 
+        [Test]
+        public void IsHL7ApplicationAcceptAck_MessageAckLineWithApplicationExcep_ReturnsTrue()
+        {
+            var messageWithMSA_AA = @$"MSH|^~\\&|PDIPIXPDQ|WCPHDC|WCGPIXHPRS|WCGDOH|202104221202||ACK^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}MSA|AA|20200702234543";
+
+            // Assert
+            Assert.That(messageWithMSA_AA.IsHL7ApplicationAcceptAck(), Is.True);
+
+        }
+
+        [Test]
+        public void IsHL7ApplicationAcceptAck_MessageAckLineWithApplicationError_ReturnsFalse()
+        {
+            var messageWithMSA_AE = $@"MSH|^~\\&|PDIPIXPDQ|WCPHDC|WCGPIXHPRS|WCGDOH|202104221202||ACK^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}MSA|AE|20200702234543";
+
+            // Assert
+            Assert.That(messageWithMSA_AE.IsHL7ApplicationAcceptAck(), Is.False);
+        }
+
+        [Test]
+        public void IsHL7ApplicationAcceptAck_MessageAckLineWithApplicationReject_ReturnsFalse()
+        {
+            var messageWithMSA_AR = $@"MSH|^~\\&|PDIPIXPDQ|WCPHDC|WCGPIXHPRS|WCGDOH|202104221202||ACK^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}MSA|AR|20200702234543";
+
+            // Assert
+            Assert.That(messageWithMSA_AR.IsHL7ApplicationAcceptAck(), Is.False);
+        }
+
+        [Test]
+        public void IsHL7ApplicationAcceptAck_NoMessageAck_ReturnsFalse()
+        {
+            var messageWithNoMSA = $@"MSH|^~\\&|PDIPIXPDQ|WCPHDC|WCGPIXHPRS|WCGDOH|202104221202||ACK^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL{nHapiHL7NewLine}EVN|A08|20200702234543|||||";
+
+            // Assert
+            Assert.That(messageWithNoMSA.IsHL7ApplicationAcceptAck(), Is.False);
+        }
+
+        [Test]
+        public void IsHL7ApplicationAcceptAck_EmptyMessage_ReturnsFalse()
+        {
+            var emptyMessage = string.Empty;
+
+            // Assert
+            Assert.That(emptyMessage.IsHL7ApplicationAcceptAck(), Is.False);
+        }
+
+        [Test]
+        public void IsHL7ApplicationAcceptAck_NullMessage_ReturnsFalse()
+        {
+            string nullMessage = null;
+
+            // Assert
+            Assert.That(nullMessage.IsHL7ApplicationAcceptAck(), Is.False);
+        }
     }
 }

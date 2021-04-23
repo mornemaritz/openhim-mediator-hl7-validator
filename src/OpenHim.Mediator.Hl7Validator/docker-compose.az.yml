@@ -8,14 +8,12 @@ networks:
 services:
   hl7-validator:
     build: .
-    image: mcr.microsoft.com/phdccontainerregistry/hl7-validator:0.0.20
+    image: phdccontainerregistry.azurecr.io/hl7-validator:0.0.20
     container_name: hl7-validator
     environment:
       - ASPNETCORE_ENVIRONMENT=ContainerGroup
       - mediatorconfig__openHimAuth__corePassword=${openHimAuth__corePassword} # from .env file that should be created in the same directory containing "openHimAuth__password=xxxxx"
       - mediatorconfig__openHimAuth__apiClientPassword=${openHimAuth__apiClientPassword}
-    ports:
-      - "7000:80"
     networks:
       - openhim
       
@@ -43,8 +41,6 @@ services:
   openhim-console:
     container_name: openhim-console
     image: jembi/openhim-console:latest
-    ports:
-      - "9000:80"
     networks:
       - openhim
       

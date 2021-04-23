@@ -37,7 +37,6 @@ stages:
       displayName: 'dotnet build $(buildConfiguration)'
       inputs:
         command: 'build'
-        projects: '**/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
     
 - stage: Test
@@ -48,6 +47,5 @@ stages:
       displayName: 'dotnet test $(buildConfiguration)'
       inputs:
         command: 'test'
-        projects: '**/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
     

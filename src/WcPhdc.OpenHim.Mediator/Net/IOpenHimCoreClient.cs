@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Net
+namespace WcPhdc.OpenHim.Mediator.Net
 {
     public interface IOpenHimCoreClient
     {

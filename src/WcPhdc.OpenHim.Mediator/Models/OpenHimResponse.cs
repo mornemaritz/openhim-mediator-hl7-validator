@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace OpenHim.Mediator.Hl7Validator.Models
+namespace WcPhdc.OpenHim.Mediator.Models
 {
     public class OpenHimResponse
     {

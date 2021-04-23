@@ -6,10 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Extensions;
+using WcPhdc.OpenHim.Mediator.Extensions;
 using OpenHim.Mediator.Hl7Validator.Services;
 using Serilog;
 using System.Text.Json;
+using WcPhdc.OpenHim.Mediator.Services;
 
 namespace OpenHim.Mediator.Hl7Validator
 {

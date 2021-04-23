@@ -5,10 +5,11 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using OpenHim.Mediator.Hl7Validator.Controllers;
-using OpenHim.Mediator.Hl7Validator.Models;
 using OpenHim.Mediator.Hl7Validator.Services;
 using System.IO;
 using System.Threading.Tasks;
+using WcPhdc.OpenHim.Mediator.Models;
+using WcPhdc.OpenHim.Mediator.Services;
 
 namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
 {

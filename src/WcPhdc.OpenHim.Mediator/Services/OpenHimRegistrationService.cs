@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
-using OpenHim.Mediator.Hl7Validator.Net;
+using WcPhdc.OpenHim.Mediator.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Services
+namespace WcPhdc.OpenHim.Mediator.Services
 {
     public class OpenHimRegistrationService : IHostedService
     {

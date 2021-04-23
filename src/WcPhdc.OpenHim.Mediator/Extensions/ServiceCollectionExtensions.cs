@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Net;
-using OpenHim.Mediator.Hl7Validator.Services;
-using System;
+using WcPhdc.OpenHim.Mediator.Configuration;
+using WcPhdc.OpenHim.Mediator.Net;
+using WcPhdc.OpenHim.Mediator.Services;
 using System.Net.Http;
-using System.Net.Security;
 
-namespace OpenHim.Mediator.Hl7Validator.Extensions
+namespace WcPhdc.OpenHim.Mediator.Extensions
 {
     public static class ServiceCollectionExtensions
     {

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHim.Mediator.Hl7Validat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenHim.Mediator.Hl7Validator", "src\OpenHim.Mediator.Hl7Validator\OpenHim.Mediator.Hl7Validator.csproj", "{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcPhdc.OpenHim.Mediator", "src\WcPhdc.OpenHim.Mediator\WcPhdc.OpenHim.Mediator.csproj", "{B6B67D5E-FC1A-4EAB-8978-0AFA289B9E59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcPhdc.OpenHim.Mediator.Tests", "WcPhdc.OpenHim.Mediator.Tests\WcPhdc.OpenHim.Mediator.Tests.csproj", "{06EF330C-B9D2-4C99-84B4-4EDBD3583C61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,21 @@ Global
 		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E66D64D3-65D4-458E-ABD0-33D3ACD02E7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B67D5E-FC1A-4EAB-8978-0AFA289B9E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B67D5E-FC1A-4EAB-8978-0AFA289B9E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B67D5E-FC1A-4EAB-8978-0AFA289B9E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B67D5E-FC1A-4EAB-8978-0AFA289B9E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06EF330C-B9D2-4C99-84B4-4EDBD3583C61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EF330C-B9D2-4C99-84B4-4EDBD3583C61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EF330C-B9D2-4C99-84B4-4EDBD3583C61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EF330C-B9D2-4C99-84B4-4EDBD3583C61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BB010730-EFA7-4952-A3AF-6018E1E1C0F5} = {707BC1AC-2E61-428E-8932-67AE6076AAA7}
+		{06EF330C-B9D2-4C99-84B4-4EDBD3583C61} = {707BC1AC-2E61-428E-8932-67AE6076AAA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {066B260B-CE28-49A2-AA48-0804C861E4F6}

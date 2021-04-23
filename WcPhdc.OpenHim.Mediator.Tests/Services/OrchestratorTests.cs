@@ -4,16 +4,16 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Models;
-using OpenHim.Mediator.Hl7Validator.Services;
+using WcPhdc.OpenHim.Mediator.Configuration;
+using WcPhdc.OpenHim.Mediator.Models;
+using WcPhdc.OpenHim.Mediator.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Tests.Services
+namespace WcPhdc.OpenHim.Mediator.Tests.Services
 {
     [TestFixture]
     public class OrchestratorTests

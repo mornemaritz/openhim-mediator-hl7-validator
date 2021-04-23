@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using OpenHim.Mediator.Hl7Validator.Services;
 using OpenHim.Mediator.Hl7Validator.Extensions;
+using WcPhdc.OpenHim.Mediator.Extensions;
+using WcPhdc.OpenHim.Mediator.Services;
+using System.Net;
 
 namespace OpenHim.Mediator.Hl7Validator.Controllers
 {
@@ -47,7 +50,13 @@ namespace OpenHim.Mediator.Hl7Validator.Controllers
             {
                 var encodedAck = await _hl7MessageProcessor.ParseAndReturnEncodedAck(hl7MessageString);
 
-                var openHimResponse = await _orchestrator.Do(hl7MessageString, encodedAck.ToOpenHimConsumerResponse(), encodedAck.IsHL7ApplicationAcceptAck());
+                // Nothing in the ODS PIX Feed spec (it seems) that outlines expected http status codes.
+                // My speculation is, that the expectation of receiving a higher level HL7 Ack message implies
+                // that anything but a success response (even in the case of HL7 related errors)
+                // may prevent the Ack message from passing through the lower HTTP layers.
+                var openHimConsumerResponse = encodedAck.ToOpenHimConsumerResponse(HttpStatusCode.OK);
+
+                var openHimResponse = await _orchestrator.Do(hl7MessageString, openHimConsumerResponse, encodedAck.IsHL7ApplicationAcceptAck());
 
                 Response.Headers.Add("Content-Type", "application/json+openhim");
 

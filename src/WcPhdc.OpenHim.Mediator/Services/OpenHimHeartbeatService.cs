@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Net;
+using WcPhdc.OpenHim.Mediator.Configuration;
+using WcPhdc.OpenHim.Mediator.Net;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Services
+namespace WcPhdc.OpenHim.Mediator.Services
 {
-    public class OpenHimHeartbeatService : IHostedService, IAsyncDisposable
+    public class OpenHimHeartbeatService : IHostedService, IDisposable
     {
         private readonly IOpenHimCoreClient _openHimCoreClient;
         private readonly int _heartbeatIntervalSeconds;
@@ -41,10 +41,11 @@ namespace OpenHim.Mediator.Hl7Validator.Services
             return Task.CompletedTask;
         }
 
-        public async ValueTask DisposeAsync()
+
+        public void Dispose()
         {
-            if(_timer != null)
-                await _timer.DisposeAsync();
+            if (_timer != null)
+                _timer.Dispose();
         }
     }
 }

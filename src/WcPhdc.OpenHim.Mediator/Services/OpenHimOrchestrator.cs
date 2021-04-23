@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Models;
+using WcPhdc.OpenHim.Mediator.Configuration;
+using WcPhdc.OpenHim.Mediator.Models;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Services
+namespace WcPhdc.OpenHim.Mediator.Services
 {
     public class OpenHimOrchestrator : IOpenHimOrchestrator
     {
@@ -23,13 +23,13 @@ namespace OpenHim.Mediator.Hl7Validator.Services
         }
 
         // Don't like this method name. Thinking of a better one...
-        public async Task<OpenHimResponse> Do(string requestContent, Response primaryResponse, bool primaryOperationSuccessful = true)
+        public async Task<OpenHimResponse> Do(string requestContent, Response primaryOpenHimConsumerResponse, bool primaryOperationSuccessful = true)
         {
             var openHimResponse = new OpenHimResponse
             {
                 MediatorUrn = _mediatorConfig.MediatorSetup.Urn,
                 Status = primaryOperationSuccessful ? "Success" : "Completed with error(s)",
-                Response = primaryResponse,
+                Response = primaryOpenHimConsumerResponse,
                 Orchestrations = null,
                 Properties = null
             };

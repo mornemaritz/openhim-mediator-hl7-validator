@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using OpenHim.Mediator.Hl7Validator.Configuration;
+using WcPhdc.OpenHim.Mediator.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Net
+namespace WcPhdc.OpenHim.Mediator.Net
 {
     public class OpenHimCoreClient : IOpenHimCoreClient
     {
@@ -55,7 +55,7 @@ namespace OpenHim.Mediator.Hl7Validator.Net
 
             await ValidateResponse(authenticationResponse);
 
-            var authResult = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(await authenticationResponse.Content.ReadAsStreamAsync(cancellationToken), default, cancellationToken);
+            var authResult = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(await authenticationResponse.Content.ReadAsStreamAsync(), default, cancellationToken);
 
             return authResult["salt"];
         }

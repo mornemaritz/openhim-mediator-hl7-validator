@@ -1,9 +1,9 @@
-﻿using OpenHim.Mediator.Hl7Validator.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using WcPhdc.OpenHim.Mediator.Models;
 
-namespace OpenHim.Mediator.Hl7Validator.Configuration
+namespace WcPhdc.OpenHim.Mediator.Configuration
 {
     public class MediatorConfig
     {

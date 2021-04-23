@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/OpenHim.Mediator.Hl7Validator",
+      "applicationUrl": "http://localhost/OpenHim.Mediator.HL7Validator",
       "sslPort": 0
     },
     "iisExpress": {
@@ -20,7 +20,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "OpenHim.Mediator.Hl7Validator": {
+    "OpenHim.Mediator.HL7Validator": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

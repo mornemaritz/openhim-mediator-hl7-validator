@@ -5,14 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using OpenHim.Mediator.Hl7Validator.Configuration;
+using OpenHim.Mediator.HL7Validator.Configuration;
 using WcPhdc.OpenHim.Mediator.Extensions;
-using OpenHim.Mediator.Hl7Validator.Services;
+using OpenHim.Mediator.HL7Validator.Services;
 using Serilog;
 using System.Text.Json;
 using WcPhdc.OpenHim.Mediator.Services;
 
-namespace OpenHim.Mediator.Hl7Validator
+namespace OpenHim.Mediator.HL7Validator
 {
     public class Startup
     {
@@ -37,7 +37,7 @@ namespace OpenHim.Mediator.Hl7Validator
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenHim.Mediator.Hl7Validator", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenHim.Mediator.HL7Validator", Version = "v1" });
             });
 
             services.AddOpenHimMediator(Configuration.GetSection("mediatorconfig"));
@@ -46,7 +46,7 @@ namespace OpenHim.Mediator.Hl7Validator
             services.AddTransient<IOpenHimOrchestrator, OpenHimOrchestrator>();
 
             services.AddOptions();
-            services.Configure<Hl7Config>(Configuration.GetSection("hl7Config"));
+            services.Configure<HL7Config>(Configuration.GetSection("hl7Config"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +56,7 @@ namespace OpenHim.Mediator.Hl7Validator
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OpenHim.Mediator.Hl7Validator v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OpenHim.Mediator.HL7Validator v1"));
             }
 
             // Setting up tls is a bit challenging...

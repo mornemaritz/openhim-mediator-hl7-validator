@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
-using OpenHim.Mediator.Hl7Validator.Extensions;
+using OpenHim.Mediator.HL7Validator.Extensions;
 using System;
-using static OpenHim.Mediator.Hl7Validator.Extensions.StringExtensions;
+using static OpenHim.Mediator.HL7Validator.Extensions.StringExtensions;
 
-namespace OpenHim.Mediator.Hl7Validator.Tests.Extensions
+namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
 {
     [TestFixture]
     public class StringExtensionsTests
@@ -45,10 +45,10 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Extensions
         public void IsHL7MessageHeaderOnly_WhenSingleLineButNotHL7MessageHeaderReturnsFalse()
         {
             // Arrange
-            var nonHl7HeaderLine = "BLAH";
+            var nonHL7HeaderLine = "BLAH";
 
             // Assert
-            Assert.That(nonHl7HeaderLine.IsHL7MessageHeaderOnly(), Is.False);
+            Assert.That(nonHL7HeaderLine.IsHL7MessageHeaderOnly(), Is.False);
         }
 
         [Test]

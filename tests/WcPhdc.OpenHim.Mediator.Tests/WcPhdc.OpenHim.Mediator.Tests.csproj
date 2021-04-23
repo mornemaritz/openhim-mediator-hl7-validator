@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\WcPhdc.OpenHim.Mediator\WcPhdc.OpenHim.Mediator.csproj" />
+    <ProjectReference Include="..\..\src\WcPhdc.OpenHim.Mediator\WcPhdc.OpenHim.Mediator.csproj" />
   </ItemGroup>
 
 </Project>

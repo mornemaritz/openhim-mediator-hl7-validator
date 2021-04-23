@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace OpenHim.Mediator.Hl7Validator.Extensions
+namespace OpenHim.Mediator.HL7Validator.Extensions
 {
     public static class StringExtensions
     {

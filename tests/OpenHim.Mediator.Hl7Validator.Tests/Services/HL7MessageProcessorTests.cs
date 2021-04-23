@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Options;
 using NHapi.Base;
 using NUnit.Framework;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Services;
+using OpenHim.Mediator.HL7Validator.Configuration;
+using OpenHim.Mediator.HL7Validator.Services;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Tests.Services
+namespace OpenHim.Mediator.HL7Validator.Tests.Services
 {
     [TestFixture]
     public class HL7MessageProcessorTests
@@ -14,9 +14,9 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Services
         private HL7MessageProcessor hl7MessageProcessorUnderTest;
 
         private Fixture fixture;
-        private Hl7Config hl7Config;
+        private HL7Config hl7Config;
 
-        private string validHl7Message = @"MSH|^~\&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL
+        private string validHL7Message = @"MSH|^~\&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL
 EVN|A08|20200702234543|||||
 PID|||010-536-7189^^^DOH&www.health.gov.za&DNS^NH ~5812185170084^^^DHA^NNZAF||DYSSEL^JACOB^^^MR^^L||19581218|M|||18DE LAAN 46^^OUDTSHOORN^^6625^^H^BRIDGTON ~18DE LAAN 46^^OUDTSHOORN^^6625^^M^BRIDGTON|ZA|0442794905^PRN^PH||AF^Afrikaans|M^Married|21^Congregation Church|||||2^Coloured||||||SA^South African||0|||20200702234542
 NK1||DYSSEL^BEAULA^|SPO^Spouse|18DE LAAN 46^^OUDTSHOORN^^6625^^^BRIDGTON
@@ -40,7 +40,7 @@ PV1||N|^^^|||||||||||||||||||||||||||||||||||||||||20200702234543";
         public void SetUp()
         {
             fixture = new Fixture();
-            hl7Config = fixture.Create<Hl7Config>();
+            hl7Config = fixture.Create<HL7Config>();
 
             hl7MessageProcessorUnderTest = new HL7MessageProcessor(Options.Create(hl7Config));
         }
@@ -49,7 +49,7 @@ PV1||N|^^^|||||||||||||||||||||||||||||||||||||||||20200702234543";
         public async Task ParseAndReturnEncodedAck_WhenValid_ReturnsEncodedAck()
         {
             // Act
-            var actualMessage = await hl7MessageProcessorUnderTest.ParseAndReturnEncodedAck(validHl7Message);
+            var actualMessage = await hl7MessageProcessorUnderTest.ParseAndReturnEncodedAck(validHL7Message);
 
             // Assert
             Assert.That(actualMessage, Does.Contain("MSH|"));

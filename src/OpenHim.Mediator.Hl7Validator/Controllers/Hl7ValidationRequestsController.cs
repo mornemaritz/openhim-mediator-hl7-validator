@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 using NHapi.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using OpenHim.Mediator.Hl7Validator.Services;
-using OpenHim.Mediator.Hl7Validator.Extensions;
+using OpenHim.Mediator.HL7Validator.Services;
+using OpenHim.Mediator.HL7Validator.Extensions;
 using WcPhdc.OpenHim.Mediator.Extensions;
 using WcPhdc.OpenHim.Mediator.Services;
 using System.Net;
 
-namespace OpenHim.Mediator.Hl7Validator.Controllers
+namespace OpenHim.Mediator.HL7Validator.Controllers
 {
     [ApiController]
     [Route("api/hl7-validation-requests")]
-    public class Hl7ValidationRequestsController : ControllerBase
+    public class HL7ValidationRequestsController : ControllerBase
     {
         private readonly IHL7MessageProcessor _hl7MessageProcessor;
         private readonly IOpenHimOrchestrator _orchestrator;
-        private readonly ILogger<Hl7ValidationRequestsController> _logger;
+        private readonly ILogger<HL7ValidationRequestsController> _logger;
 
-        public Hl7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor,
+        public HL7ValidationRequestsController(IHL7MessageProcessor hl7MessageProcessor,
             IOpenHimOrchestrator orchestrator,
-            ILogger<Hl7ValidationRequestsController> logger)
+            ILogger<HL7ValidationRequestsController> logger)
         {
             _hl7MessageProcessor = hl7MessageProcessor ?? throw new ArgumentNullException(nameof(hl7MessageProcessor));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

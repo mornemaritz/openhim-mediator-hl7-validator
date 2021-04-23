@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\OpenHim.Mediator.Hl7Validator\OpenHim.Mediator.Hl7Validator.csproj" />
+    <ProjectReference Include="..\..\src\OpenHim.Mediator.HL7Validator\OpenHim.Mediator.HL7Validator.csproj" />
   </ItemGroup>
 
 </Project>

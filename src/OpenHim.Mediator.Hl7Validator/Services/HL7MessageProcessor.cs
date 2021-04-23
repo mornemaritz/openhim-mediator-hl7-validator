@@ -4,20 +4,20 @@ using NHapi.Base.Model;
 using NHapi.Base.Parser;
 using NHapi.Base.validation.impl;
 using NHapiTools.Base.Util;
-using OpenHim.Mediator.Hl7Validator.Configuration;
-using OpenHim.Mediator.Hl7Validator.Extensions;
+using OpenHim.Mediator.HL7Validator.Configuration;
+using OpenHim.Mediator.HL7Validator.Extensions;
 using System;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Services
+namespace OpenHim.Mediator.HL7Validator.Services
 {
     public class HL7MessageProcessor : IHL7MessageProcessor
     {
         private PipeParser pipeParser = new PipeParser { ValidationContext = new StrictValidation() };
 
-        private readonly Hl7Config hl7Config;
+        private readonly HL7Config hl7Config;
 
-        public HL7MessageProcessor(IOptions<Hl7Config> hl7ConfigOptions)
+        public HL7MessageProcessor(IOptions<HL7Config> hl7ConfigOptions)
         {
             hl7Config = hl7ConfigOptions.Value ?? throw new ArgumentNullException(nameof(hl7ConfigOptions));
         }

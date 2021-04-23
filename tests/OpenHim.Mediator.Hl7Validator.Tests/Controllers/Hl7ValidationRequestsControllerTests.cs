@@ -4,24 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using OpenHim.Mediator.Hl7Validator.Controllers;
-using OpenHim.Mediator.Hl7Validator.Services;
+using OpenHim.Mediator.HL7Validator.Controllers;
+using OpenHim.Mediator.HL7Validator.Services;
 using System.IO;
 using System.Threading.Tasks;
 using WcPhdc.OpenHim.Mediator.Models;
 using WcPhdc.OpenHim.Mediator.Services;
 
-namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
+namespace OpenHim.Mediator.HL7Validator.Tests.Controllers
 {
     [TestFixture]
-    public class Hl7ValidationRequestsControllerTests
+    public class HL7ValidationRequestsControllerTests
     {
-        private Hl7ValidationRequestsController controllerUnderTest;
+        private HL7ValidationRequestsController controllerUnderTest;
         private Fixture fixture;
 
         private Mock<IHL7MessageProcessor> hl7MessageProcessor;
         private Mock<IOpenHimOrchestrator> orchestrator;
-        private Mock<ILogger<Hl7ValidationRequestsController>> logger;
+        private Mock<ILogger<HL7ValidationRequestsController>> logger;
 
         private const string hl7MessageData = @"MSH|^~\&|SENDING_APPLICATION|SENDING_FACILITY|RECEIVING_APPLICATION|RECEIVING_FACILITY|20110614075841||ACK|1407511|P|2.5.1||||||";
         private OpenHimResponse openHimResponse;
@@ -31,7 +31,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
         {
             hl7MessageProcessor = new Mock<IHL7MessageProcessor>();
             orchestrator = new Mock<IOpenHimOrchestrator>();
-            logger = new Mock<ILogger<Hl7ValidationRequestsController>>();
+            logger = new Mock<ILogger<HL7ValidationRequestsController>>();
 
             fixture = new Fixture();
             openHimResponse = fixture.Create<OpenHimResponse>();
@@ -49,7 +49,7 @@ namespace OpenHim.Mediator.Hl7Validator.Tests.Controllers
                 HttpContext = httpContext,
             };
 
-            controllerUnderTest = new Hl7ValidationRequestsController(hl7MessageProcessor.Object, orchestrator.Object, logger.Object) { ControllerContext = controllerContext };
+            controllerUnderTest = new HL7ValidationRequestsController(hl7MessageProcessor.Object, orchestrator.Object, logger.Object) { ControllerContext = controllerContext };
         }
 
         [Test]

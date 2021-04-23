@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 
-namespace OpenHim.Mediator.Hl7Validator
+namespace OpenHim.Mediator.HL7Validator
 {
     public class Program
     {

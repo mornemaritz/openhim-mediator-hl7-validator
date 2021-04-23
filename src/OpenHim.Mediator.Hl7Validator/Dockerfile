@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["OpenHim.Mediator.Hl7Validator.csproj", "OpenHim.Mediator.Hl7Validator/"]
-RUN dotnet restore "OpenHim.Mediator.Hl7Validator/OpenHim.Mediator.Hl7Validator.csproj"
-WORKDIR "/src/OpenHim.Mediator.Hl7Validator"
+COPY ["OpenHim.Mediator.HL7Validator.csproj", "OpenHim.Mediator.HL7Validator/"]
+RUN dotnet restore "OpenHim.Mediator.HL7Validator/OpenHim.Mediator.HL7Validator.csproj"
+WORKDIR "/src/OpenHim.Mediator.HL7Validator"
 COPY . .
-RUN dotnet build "OpenHim.Mediator.Hl7Validator.csproj" -c Release -o /app/build
+RUN dotnet build "OpenHim.Mediator.HL7Validator.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "OpenHim.Mediator.Hl7Validator.csproj" -c Release -o /app/publish
+RUN dotnet publish "OpenHim.Mediator.HL7Validator.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "OpenHim.Mediator.Hl7Validator.dll"]
+ENTRYPOINT ["dotnet", "OpenHim.Mediator.HL7Validator.dll"]

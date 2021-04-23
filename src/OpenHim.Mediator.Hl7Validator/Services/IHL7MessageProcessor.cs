@@ -1,7 +1,7 @@
 ﻿using NHapi.Base.Model;
 using System.Threading.Tasks;
 
-namespace OpenHim.Mediator.Hl7Validator.Services
+namespace OpenHim.Mediator.HL7Validator.Services
 {
     public interface IHL7MessageProcessor
     {

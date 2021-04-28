@@ -14,7 +14,7 @@ namespace WcPhdc.OpenHim.Mediator.Services
             _openHimCoreClient = openHimCoreClient;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken) => 
+        public async Task StartAsync(CancellationToken cancellationToken) =>
             await _openHimCoreClient.RegisterAsync(cancellationToken);
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

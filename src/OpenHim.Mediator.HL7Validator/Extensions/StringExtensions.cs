@@ -14,7 +14,7 @@ namespace OpenHim.Mediator.HL7Validator.Extensions
             }
 
             return source.StartsWith("MSH|")
-                && !source.Contains(nHapiHL7NewLine); 
+                && !source.Contains(nHapiHL7NewLine);
         }
 
         public static string GetHL7MessageHeader(this string source)

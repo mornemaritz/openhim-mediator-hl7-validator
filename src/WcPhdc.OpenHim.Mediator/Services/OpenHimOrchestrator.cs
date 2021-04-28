@@ -15,8 +15,7 @@ namespace WcPhdc.OpenHim.Mediator.Services
         private readonly MediatorConfig _mediatorConfig;
         private readonly IHttpClientFactory _clientFactory;
 
-        public OpenHimOrchestrator(IOptions<MediatorConfig> mediatorConfigOptions,
-            IHttpClientFactory clientFactory)
+        public OpenHimOrchestrator(IOptions<MediatorConfig> mediatorConfigOptions, IHttpClientFactory clientFactory)
         {
             _mediatorConfig = mediatorConfigOptions.Value ?? throw new ArgumentException($"{nameof(mediatorConfigOptions)} does not contain a value of type {nameof(MediatorConfig)}");
             _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
@@ -35,9 +34,9 @@ namespace WcPhdc.OpenHim.Mediator.Services
             };
 
             if (!primaryOperationSuccessful || !_mediatorConfig.HasOrchestrations())
-			{
-				return openHimResponse;
-			}
+            {
+                return openHimResponse;
+            }
 
             var basicAuth = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_mediatorConfig.OpenHimAuth.ApiClientName}:{_mediatorConfig.OpenHimAuth.ApiClientPassword}"));
 
@@ -47,7 +46,7 @@ namespace WcPhdc.OpenHim.Mediator.Services
                 orchestrationClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuth);
                 orchestrationClient.BaseAddress = new Uri(orchestration.Request.Host);
 
-                var request = new HttpRequestMessage(new HttpMethod(orchestration.Request.Method),$"{orchestration.Request.Path}?{orchestration.Request.Querystring}")
+                var request = new HttpRequestMessage(new HttpMethod(orchestration.Request.Method), $"{orchestration.Request.Path}?{orchestration.Request.Querystring}")
                 {
                     Content = new StringContent(requestContent, Encoding.UTF8, "application/json")
                 };

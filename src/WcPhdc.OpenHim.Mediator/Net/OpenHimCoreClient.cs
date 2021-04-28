@@ -24,7 +24,8 @@ namespace WcPhdc.OpenHim.Mediator.Net
             _mediatorConfig = mediatorConfig.Value ?? throw new ArgumentNullException(nameof(mediatorConfig));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            var openHimCoreHost = _mediatorConfig.MediatorCore.OpenHimCoreHost ?? throw new ArgumentException($"{nameof(mediatorConfig)} has no value for MediatorCore.OpenHimCoreHost");
+            var openHimCoreHost = _mediatorConfig.MediatorCore.OpenHimCoreHost
+                ?? throw new ArgumentException($"{nameof(mediatorConfig)} has no value for MediatorCore.OpenHimCoreHost");
 
             httpClient.BaseAddress = new Uri(openHimCoreHost);
 
@@ -63,10 +64,10 @@ namespace WcPhdc.OpenHim.Mediator.Net
         private async Task ValidateResponse(HttpResponseMessage httpResponse, string authTimestamp = default)
         {
             if (!_mediatorConfig.OpenHimAuth.IgnoreOutgoingOpenHimAuthFailures)
-			{
-				httpResponse.EnsureSuccessStatusCode();
-			}
-			else if (!httpResponse.IsSuccessStatusCode)
+            {
+                httpResponse.EnsureSuccessStatusCode();
+            }
+            else if (!httpResponse.IsSuccessStatusCode)
             {
                 var passwordLength = _mediatorConfig.OpenHimAuth.CorePassword?.Length;
                 var responseContent = await httpResponse.Content.ReadAsStringAsync();

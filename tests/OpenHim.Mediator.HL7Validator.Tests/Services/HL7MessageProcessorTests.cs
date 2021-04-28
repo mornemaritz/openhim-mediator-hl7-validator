@@ -72,7 +72,7 @@ PV1||N|^^^|||||||||||||||||||||||||||||||||||||||||20200702234543";
             Assert.That(actualMessage, Does.Contain($"ERR|{previousErrorMessage}"));
         }
 
-        [Test,Ignore("Struggling to induce a parse error for the MSH segment")]
+        [Test, Ignore("Struggling to induce a parse error for the MSH segment")]
         public void ParseAndReturnEncodedAck_GivenMessageHeaderOnlyAsInput_WhenInvalidAndWithoutParseError_ThrowsHL7Exception()
         {
             // Act

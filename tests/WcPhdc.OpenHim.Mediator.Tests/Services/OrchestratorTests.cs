@@ -33,7 +33,7 @@ namespace WcPhdc.OpenHim.Mediator.Tests.Services
         public void SetUp()
         {
             fixture = new Fixture();
-            fixture.Customizations.Add(new TypeRelay(typeof(HttpContent),typeof(StringContent)));
+            fixture.Customizations.Add(new TypeRelay(typeof(HttpContent), typeof(StringContent)));
             mediatorConfig = fixture.Create<MediatorConfig>();
             primaryResponse = fixture.Create<Response>();
 

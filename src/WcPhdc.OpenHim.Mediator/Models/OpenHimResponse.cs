@@ -26,9 +26,9 @@ namespace WcPhdc.OpenHim.Mediator.Models
         public void AddOrchestration(Orchestration orchestration)
         {
             if (Orchestrations == null)
-			{
-				Orchestrations = new List<Orchestration>();
-			}
+            {
+                Orchestrations = new List<Orchestration>();
+            }
 
             Orchestrations.Add(orchestration);
         }

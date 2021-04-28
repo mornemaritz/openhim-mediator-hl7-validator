@@ -54,7 +54,7 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Controllers
 
         [Test]
         public async Task Post_WhenBodyEmpty_ReturnsBadRequest()
-        {            
+        {
             //Arrange
             string emptyBodyData = string.Empty;
             var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(emptyBodyData));

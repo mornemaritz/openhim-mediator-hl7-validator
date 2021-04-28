@@ -24,7 +24,7 @@ namespace OpenHim.Mediator.HL7Validator.Services
 
         public async Task<string> ParseAndReturnEncodedAck(string hl7Message, string parseError = default)
         {
-            if (string.IsNullOrEmpty(hl7Message))
+            if (string.IsNullOrWhiteSpace(hl7Message))
             {
                 throw new HL7Exception("No valid HL7 message segments found");
             }

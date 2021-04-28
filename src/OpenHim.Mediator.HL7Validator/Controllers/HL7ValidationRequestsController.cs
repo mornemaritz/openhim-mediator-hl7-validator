@@ -43,7 +43,7 @@ namespace OpenHim.Mediator.HL7Validator.Controllers
                 hl7MessageString = await reader.ReadToEndAsync();
             }
 
-            if (string.IsNullOrEmpty(hl7MessageString))
+            if (string.IsNullOrWhiteSpace(hl7MessageString))
             {
                 return BadRequest("Request body may not be null or empty");
             }

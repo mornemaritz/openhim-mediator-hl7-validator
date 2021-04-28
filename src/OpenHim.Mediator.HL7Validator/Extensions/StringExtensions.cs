@@ -8,7 +8,7 @@ namespace OpenHim.Mediator.HL7Validator.Extensions
 
         public static bool IsHL7MessageHeaderOnly(this string source)
         {
-            if (string.IsNullOrEmpty(source))
+            if (string.IsNullOrWhiteSpace(source))
             {
                 return false;
             }
@@ -19,7 +19,7 @@ namespace OpenHim.Mediator.HL7Validator.Extensions
 
         public static string GetHL7MessageHeader(this string source)
         {
-            if (string.IsNullOrEmpty(source))
+            if (string.IsNullOrWhiteSpace(source))
             {
                 return default;
             }
@@ -31,7 +31,7 @@ namespace OpenHim.Mediator.HL7Validator.Extensions
 
         public static bool IsHL7ApplicationAcceptAck(this string source)
         {
-            if (string.IsNullOrEmpty(source))
+            if (string.IsNullOrWhiteSpace(source))
             {
                 return false;
             }

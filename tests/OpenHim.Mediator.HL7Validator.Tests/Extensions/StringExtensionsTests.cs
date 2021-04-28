@@ -8,7 +8,7 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
     [TestFixture]
     public class StringExtensionsTests
     {
-        private string hl7HeaderOnly = "MSH|^~&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL";
+        private readonly string hl7HeaderOnly = "MSH|^~&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL";
 
         [Test]
         public void IsHL7MessageHeaderOnly_WhenHeaderOnlyReturnsTrue()

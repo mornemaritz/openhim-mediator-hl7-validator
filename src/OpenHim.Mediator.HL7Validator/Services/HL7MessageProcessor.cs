@@ -13,7 +13,7 @@ namespace OpenHim.Mediator.HL7Validator.Services
 {
     public class HL7MessageProcessor : IHL7MessageProcessor
     {
-        private PipeParser pipeParser = new PipeParser { ValidationContext = new StrictValidation() };
+        private readonly PipeParser pipeParser = new() { ValidationContext = new StrictValidation() };
 
         private readonly HL7Config hl7Config;
 

@@ -26,7 +26,7 @@ namespace WcPhdc.OpenHim.Mediator.Tests.Services
         private Fixture fixture;
 
         private MediatorConfig mediatorConfig;
-        private string bodyString = "PostThis";
+        private readonly string bodyString = "PostThis";
         private Response primaryResponse;
 
         [SetUp]

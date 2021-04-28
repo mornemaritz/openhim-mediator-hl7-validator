@@ -4,7 +4,7 @@ namespace OpenHim.Mediator.HL7Validator.Extensions
 {
     public static class StringExtensions
     {
-        public static char nHapiHL7NewLine = '\r';
+        public static readonly char nHapiHL7NewLine = '\r';
 
         public static bool IsHL7MessageHeaderOnly(this string source)
         {

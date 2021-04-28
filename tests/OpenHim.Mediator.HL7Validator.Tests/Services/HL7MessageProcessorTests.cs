@@ -58,7 +58,7 @@ PV1||N|^^^|||||||||||||||||||||||||||||||||||||||||20200702234543";
         }
 
         [Test, Ignore("Struggling to induce a parse error for the MSH segment")]
-        public async Task ParseAndReturnEncodedAck_GivenMessageHeaderOnlyAsInput_WhenInvalidAndWithParseError_ReturnsAppicationErrorAckWithPreviousError()
+        public async Task ParseAndReturnEncodedAck_GivenMessageHeaderOnlyAsInput_WhenInvalidAndWithParseError_ReturnsApplicationErrorAckWithPreviousError()
         {
             // Arrange
             var previousErrorMessage = "This is the previous error message";

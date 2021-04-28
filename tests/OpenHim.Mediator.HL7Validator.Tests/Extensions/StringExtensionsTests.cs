@@ -9,6 +9,7 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
     public class StringExtensionsTests
     {
         private readonly string hl7HeaderOnly = "MSH|^~&|WCGPIXHPRS|WCGDOH|HPRSPIXPDQ|CENTRAL|20200702234543.424||ADT^A08^ADT_A01|20200702234543|P|2.5.1|||AL|AL";
+        private readonly string whitespace = "   ";
 
         [Test]
         public void IsHL7MessageHeaderOnly_WhenHeaderOnlyReturnsTrue()
@@ -18,10 +19,10 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
         }
 
         [Test]
-        public void IsHL7MessageHeaderOnly_WhenEmptyStringReturnsFalse()
+        public void IsHL7MessageHeaderOnly_WhenWhitespaceReturnsFalse()
         {
             // Assert
-            Assert.That(string.Empty.IsHL7MessageHeaderOnly(), Is.False);
+            Assert.That(whitespace.IsHL7MessageHeaderOnly(), Is.False);
         }
 
         [Test]
@@ -60,10 +61,10 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
         }
 
         [Test]
-        public void GetHL7MessageHeader_WhenEmptyStringReturnsNull()
+        public void GetHL7MessageHeader_WhenWhitespaceReturnsNull()
         {
             // Assert
-            Assert.That(string.Empty.GetHL7MessageHeader(), Is.Null);
+            Assert.That(whitespace.GetHL7MessageHeader(), Is.Null);
         }
 
         [Test]
@@ -120,12 +121,10 @@ namespace OpenHim.Mediator.HL7Validator.Tests.Extensions
         }
 
         [Test]
-        public void IsHL7ApplicationAcceptAck_EmptyMessage_ReturnsFalse()
+        public void IsHL7ApplicationAcceptAck_WhitespaceMessage_ReturnsFalse()
         {
-            var emptyMessage = string.Empty;
-
             // Assert
-            Assert.That(emptyMessage.IsHL7ApplicationAcceptAck(), Is.False);
+            Assert.That(whitespace.IsHL7ApplicationAcceptAck(), Is.False);
         }
 
         [Test]

@@ -35,7 +35,9 @@ namespace WcPhdc.OpenHim.Mediator.Services
             };
 
             if (!primaryOperationSuccessful || !_mediatorConfig.HasOrchestrations())
-                return openHimResponse;
+			{
+				return openHimResponse;
+			}
 
             var basicAuth = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_mediatorConfig.OpenHimAuth.ApiClientName}:{_mediatorConfig.OpenHimAuth.ApiClientPassword}"));
 

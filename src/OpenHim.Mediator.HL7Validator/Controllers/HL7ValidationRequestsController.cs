@@ -44,7 +44,9 @@ namespace OpenHim.Mediator.HL7Validator.Controllers
             }
 
             if (string.IsNullOrEmpty(hl7MessageString))
+            {
                 return BadRequest("Request body may not be null or empty");
+            }
 
             try
             {

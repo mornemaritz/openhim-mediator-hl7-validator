@@ -63,8 +63,10 @@ namespace WcPhdc.OpenHim.Mediator.Net
         private async Task ValidateResponse(HttpResponseMessage httpResponse, string authTimestamp = default)
         {
             if (!_mediatorConfig.OpenHimAuth.IgnoreOutgoingOpenHimAuthFailures)
-                httpResponse.EnsureSuccessStatusCode();
-            else if (!httpResponse.IsSuccessStatusCode)
+			{
+				httpResponse.EnsureSuccessStatusCode();
+			}
+			else if (!httpResponse.IsSuccessStatusCode)
             {
                 var passwordLength = _mediatorConfig.OpenHimAuth.CorePassword?.Length;
                 var responseContent = await httpResponse.Content.ReadAsStringAsync();

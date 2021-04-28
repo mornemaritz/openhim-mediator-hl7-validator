@@ -25,7 +25,9 @@ namespace OpenHim.Mediator.HL7Validator.Services
         public async Task<string> ParseAndReturnEncodedAck(string hl7Message, string parseError = default)
         {
             if (string.IsNullOrEmpty(hl7Message))
-                throw new HL7Exception("No valid HL7 message segments found");
+			{
+				throw new HL7Exception("No valid HL7 message segments found");
+			}
 
             try
             {
@@ -35,11 +37,15 @@ namespace OpenHim.Mediator.HL7Validator.Services
                 IMessage ackMessage;
 
                 if (string.IsNullOrEmpty(parseError))
-                    ackMessage = ack.MakeACK(parsedMessage);
-                else
-                    ackMessage = ack.MakeACK(parsedMessage, AckTypes.AE, parseError);
+				{
+					ackMessage = ack.MakeACK(parsedMessage);
+				}
+				else
+				{
+					ackMessage = ack.MakeACK(parsedMessage, AckTypes.AE, parseError);
+				}
 
-                return await Task.Run(() => pipeParser.Encode(ackMessage));
+				return await Task.Run(() => pipeParser.Encode(ackMessage));
             }
             catch (HL7Exception hex) when (string.IsNullOrEmpty(parseError) && !hl7Message.IsHL7MessageHeaderOnly())
             {

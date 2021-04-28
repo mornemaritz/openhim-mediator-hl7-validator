@@ -44,8 +44,7 @@ namespace WcPhdc.OpenHim.Mediator.Services
 
         public void Dispose()
         {
-            if (_timer != null)
-                _timer.Dispose();
+            _timer?.Dispose();
         }
     }
 }

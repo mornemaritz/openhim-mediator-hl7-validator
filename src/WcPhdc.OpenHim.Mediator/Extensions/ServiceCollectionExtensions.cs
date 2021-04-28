@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WcPhdc.OpenHim.Mediator.Configuration;
 using WcPhdc.OpenHim.Mediator.Net;
 using WcPhdc.OpenHim.Mediator.Services;
-using System.Net.Http;
 
 namespace WcPhdc.OpenHim.Mediator.Extensions
 {

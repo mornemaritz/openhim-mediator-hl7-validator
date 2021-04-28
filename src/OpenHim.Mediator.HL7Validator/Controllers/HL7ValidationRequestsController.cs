@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using NHapi.Base;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OpenHim.Mediator.HL7Validator.Services;
+using NHapi.Base;
 using OpenHim.Mediator.HL7Validator.Extensions;
+using OpenHim.Mediator.HL7Validator.Services;
 using WcPhdc.OpenHim.Mediator.Extensions;
 using WcPhdc.OpenHim.Mediator.Services;
-using System.Net;
 
 namespace OpenHim.Mediator.HL7Validator.Controllers
 {

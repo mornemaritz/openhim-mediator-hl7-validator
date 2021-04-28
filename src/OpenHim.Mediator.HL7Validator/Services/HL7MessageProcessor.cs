@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 using NHapi.Base;
 using NHapi.Base.Model;
 using NHapi.Base.Parser;
@@ -6,8 +8,6 @@ using NHapi.Base.validation.impl;
 using NHapiTools.Base.Util;
 using OpenHim.Mediator.HL7Validator.Configuration;
 using OpenHim.Mediator.HL7Validator.Extensions;
-using System;
-using System.Threading.Tasks;
 
 namespace OpenHim.Mediator.HL7Validator.Services
 {

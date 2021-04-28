@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using OpenHim.Mediator.HL7Validator.Extensions;
-using System;
 using static OpenHim.Mediator.HL7Validator.Extensions.StringExtensions;
 
 namespace OpenHim.Mediator.HL7Validator.Tests.Extensions

@@ -1,10 +1,10 @@
-﻿using AutoFixture;
+﻿using System.Threading.Tasks;
+using AutoFixture;
 using Microsoft.Extensions.Options;
 using NHapi.Base;
 using NUnit.Framework;
 using OpenHim.Mediator.HL7Validator.Configuration;
 using OpenHim.Mediator.HL7Validator.Services;
-using System.Threading.Tasks;
 
 namespace OpenHim.Mediator.HL7Validator.Tests.Services
 {

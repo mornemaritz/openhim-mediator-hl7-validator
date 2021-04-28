@@ -1,5 +1,5 @@
-﻿using WcPhdc.OpenHim.Mediator.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using WcPhdc.OpenHim.Mediator.Models;
 
 namespace WcPhdc.OpenHim.Mediator.Services
 {

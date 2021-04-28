@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
-using WcPhdc.OpenHim.Mediator.Net;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using WcPhdc.OpenHim.Mediator.Net;
 
 namespace WcPhdc.OpenHim.Mediator.Services
 {

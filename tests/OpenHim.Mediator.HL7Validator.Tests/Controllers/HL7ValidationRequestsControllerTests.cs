@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.IO;
+using System.Threading.Tasks;
+using AutoFixture;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,8 +8,6 @@ using Moq;
 using NUnit.Framework;
 using OpenHim.Mediator.HL7Validator.Controllers;
 using OpenHim.Mediator.HL7Validator.Services;
-using System.IO;
-using System.Threading.Tasks;
 using WcPhdc.OpenHim.Mediator.Models;
 using WcPhdc.OpenHim.Mediator.Services;
 

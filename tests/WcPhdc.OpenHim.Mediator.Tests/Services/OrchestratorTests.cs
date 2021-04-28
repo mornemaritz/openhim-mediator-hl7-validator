@@ -1,4 +1,9 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoFixture;
 using AutoFixture.Kernel;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -7,11 +12,6 @@ using NUnit.Framework;
 using WcPhdc.OpenHim.Mediator.Configuration;
 using WcPhdc.OpenHim.Mediator.Models;
 using WcPhdc.OpenHim.Mediator.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace WcPhdc.OpenHim.Mediator.Tests.Services
 {

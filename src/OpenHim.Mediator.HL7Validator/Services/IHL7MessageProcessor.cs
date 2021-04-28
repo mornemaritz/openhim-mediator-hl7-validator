@@ -1,5 +1,4 @@
-﻿using NHapi.Base.Model;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace OpenHim.Mediator.HL7Validator.Services
 {

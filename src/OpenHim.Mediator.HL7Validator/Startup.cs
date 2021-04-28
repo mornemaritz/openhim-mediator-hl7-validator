@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -6,10 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OpenHim.Mediator.HL7Validator.Configuration;
-using WcPhdc.OpenHim.Mediator.Extensions;
 using OpenHim.Mediator.HL7Validator.Services;
 using Serilog;
-using System.Text.Json;
+using WcPhdc.OpenHim.Mediator.Extensions;
 using WcPhdc.OpenHim.Mediator.Services;
 
 namespace OpenHim.Mediator.HL7Validator

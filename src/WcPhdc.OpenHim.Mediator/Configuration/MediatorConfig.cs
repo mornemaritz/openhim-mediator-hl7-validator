@@ -61,11 +61,11 @@ namespace WcPhdc.OpenHim.Mediator.Configuration
         [JsonPropertyName("openHimHeartbeatpath")]
         public string OpenHimHeartbeatPath { get; set; }
 
+        [JsonPropertyName("heartbeatEnabled")]
+        public bool HeartbeatEnabled { get; set; }
+
         [JsonPropertyName("heartbeatInterval")]
         public int HeartbeatInterval { get; set; }
-
-        [JsonPropertyName("isHeartbeatDisabled")]
-        public bool IsHeartbeatDisabled { get; set; }
     }
 
     public class MediatorSetup

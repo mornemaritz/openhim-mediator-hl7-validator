@@ -7,7 +7,7 @@ networks:
 
 services:
   hl7-validator:
-    image: mornemaritz/hl7-validator:0.0.20
+    image: mornemaritz/hl7-validator:0.1.0
     container_name: hl7-validator
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerDev
